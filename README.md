@@ -131,22 +131,3 @@ Landmarks used: shoulders, hips, knees, ankles, nose.
 
 ---
 
-## 📌 To-Do (Optional)
-
-- [ ] Add repetition counter for squats  
-- [ ] Export session report (PDF/CSV)  
-- [ ] User login & posture history  
-- [ ] Add neck/shoulder hunch detection in real-time  
-
----
-
-## 💬 Feedback
-
-Got posture? Drop your thoughts or open a PR 🛠️  
-Or just... sit straight.
-
----
-
-## 📝 License
-
-MIT License © 2025 – *Your Name*
