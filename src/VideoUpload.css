@@ -1,0 +1,28 @@
+/* src/components/VideoUpload.css */
+.container {
+  text-align: center;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.buttons {
+  margin-bottom: 10px;
+}
+
+button {
+  margin: 5px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.result-box {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  background: #f9f9f9;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
