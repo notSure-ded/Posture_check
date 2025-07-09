@@ -1,70 +1,152 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 🧍‍♂️ Posture Detection App
 
-## Available Scripts
+A full-stack AI-powered **Posture Analysis App** built with **React**, **Flask**, and **MediaPipe**. It evaluates human posture from **video uploads** or **webcam feed** using rule-based analysis on body landmarks.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🔧 Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- ✅ **Video Upload** for offline posture analysis  
+- 🎥 **Live Webcam Mode** for real-time feedback  
+- 🧠 **Rule-Based Posture Scoring** (Good/Bad frames)  
+- 📊 **Posture Statistics** (Total Frames, Good, Bad, Score %)  
+- 🖼️ **Visual Feedback per Frame** (landmarks + labels)  
+- 💻 Full browser/device compatibility fallback  
+- ⚡ Optimized for **low-latency analysis** using MediaPipe  
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🧱 Tech Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| Frontend        | Backend     | AI/Posture Engine |
+|----------------|-------------|-------------------|
+| React.js        | Flask (Python) | MediaPipe + OpenCV |
+| HTML5/CSS       | Flask-SocketIO | Numpy + Custom Angle Logic |
+| JavaScript      | CORS, Tempfiles | Pose Landmark Angles |
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 📂 Project Structure
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+posture-app/
+│
+├── backend/
+│   ├── app.py                     # Flask app with /analyze route
+│   ├── utils.py                   # angle calculation, frame encoding
+│   └── requirements.txt           # Flask, opencv-python, mediapipe
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── VideoUpload.js     # Upload & analyze video
+│   │   │   ├── WebcamCapture.js   # Live webcam detection
+│   └── public/                    # index.html, favicon
+│
+└── README.md
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 🚀 Getting Started
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 1️⃣ Clone the repo
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+git clone https://github.com/yourusername/posture-detection-app
+cd posture-detection-app
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 2️⃣ Backend Setup (Flask)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate  # or venv\Scripts\activate on Windows
 
-## Learn More
+pip install -r requirements.txt
+python app.py
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 3️⃣ Frontend Setup (React)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+cd ../frontend
+npm install
+npm start
+```
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 📡 Flask API Endpoint
 
-### Analyzing the Bundle Size
+### `POST /analyze`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Accepts: video file (`multipart/form-data`)
+- Returns: posture score, frame-wise feedback, base64 images
 
-### Making a Progressive Web App
+```json
+{
+  "total_frames": 120,
+  "good_posture_frames": 90,
+  "bad_posture_frames": 30,
+  "posture_score": 75.0,
+  "message": "⚠️ Fix your posture!",
+  "frames": [
+    {
+      "frame": "data:image/jpeg;base64,...",
+      "feedback": "✅ Good posture"
+    }
+  ]
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 🤖 Posture Rules (Sitting + Squatting)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+| Condition        | Bad Posture Trigger |
+|------------------|---------------------|
+| Sitting          | Back angle < 150° OR Neck angle < 150° |
+| Squatting        | Back angle < 150° OR Knee goes past ankle |
 
-### Deployment
+Landmarks used: shoulders, hips, knees, ankles, nose.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+## 📸 Sample Output
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Landmarks rendered on each frame  
+- Good posture: ✅ label  
+- Bad posture: ⚠️ label  
+- Stats shown after upload or session ends  
+
+---
+
+## 🛡️ Browser Support
+
+- Live webcam mode uses `navigator.mediaDevices.getUserMedia()`  
+- Fallback handled if browser doesn’t support webcam  
+
+---
+
+## 📌 To-Do (Optional)
+
+- [ ] Add repetition counter for squats  
+- [ ] Export session report (PDF/CSV)  
+- [ ] User login & posture history  
+- [ ] Add neck/shoulder hunch detection in real-time  
+
+---
+
+## 💬 Feedback
+
+Got posture? Drop your thoughts or open a PR 🛠️  
+Or just... sit straight.
+
+---
+
+## 📝 License
+
+MIT License © 2025 – *Your Name*
