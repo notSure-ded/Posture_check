@@ -5,7 +5,8 @@ const WebcamCapture = ({ setFeedback, setAnalysis }) => {
   const mediaRecorderRef = useRef(null);
   const [recording, setRecording] = useState(false);
   const [framesData, setFramesData] = useState([]);
-  const [feedback, setLocalFeedback] = useState('');
+ const [feedback, _] = useState(); 
+
   const [stream, setStream] = useState(null)
 
   const startRecording = async () => {
